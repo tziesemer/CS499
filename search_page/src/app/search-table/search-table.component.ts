@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { rescues } from '../data/resucues';
 
+
 @Component({
   selector: 'app-search-table',
   standalone: true,
