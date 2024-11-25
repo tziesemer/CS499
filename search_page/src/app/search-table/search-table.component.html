@@ -1,0 +1,31 @@
+<!-- <pre>{{rescues | json }}</pre> -->
+ <div class="table-responsive-sm">
+        <table class="table table-bordered table-striped" >
+            <thead>
+                <tr>
+                    <th scope="col">Select</th>
+                    <th scope="col">Animal ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Species</th>
+                    <th scope="col">Outcome</th>
+                    <th scope="col">Breed</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Sex</th>
+                    <th scope="col">Color</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr *ngFor="let rescue of rescues">
+                        <th scope="row"><input type="radio" name="chosen_animal" (change)="onSelectionChange($event)" value="{{rescue.animal_id}}"></th>
+                        <td>{{rescue.animal_id}}</td>
+                        <td>{{rescue.name}}</td>
+                        <td>{{rescue.species}}</td>
+                        <td>{{rescue.outcome}}</td>
+                        <td>{{rescue.breed}}</td>
+                        <td>{{rescue.age}}</td>
+                        <td>{{rescue.sex}}</td>
+                        <td>{{rescue.color}}</td>
+                    </tr>
+            </tbody>
+        </table>
+        </div>
