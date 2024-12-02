@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class FiltersService {
 
-  constructor() { }
-
+  constructor(
+  ) { }
 
   filterData(data, filter){
 
