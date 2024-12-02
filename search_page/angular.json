@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "rescue-search": {
+    "search-page": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/rescue-search",
+            "outputPath": "dist/search-page",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -27,7 +27,8 @@
               }
             ],
             "styles": [
-              "src/assets/css/styles.css"
+              "@angular/material/prebuilt-themes/magenta-violet.css",
+              "src/styles.css"
             ],
             "scripts": []
           },
@@ -59,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "rescue-search:build:production"
+              "buildTarget": "search-page:build:production"
             },
             "development": {
-              "buildTarget": "rescue-search:build:development"
+              "buildTarget": "search-page:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -85,7 +86,8 @@
               }
             ],
             "styles": [
-              "src/assets/css/styles.css"
+              "@angular/material/prebuilt-themes/magenta-violet.css",
+              "src/styles.css"
             ],
             "scripts": []
           }

@@ -10,5 +10,5 @@ import { SearchTableComponent } from './search-table/search-table.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'rescue-search';
+  title = 'Rescue Rescues';
 }

@@ -1,34 +1,57 @@
-<!-- <pre>{{rescues | json }}</pre> -->
- <body>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.5/dist/bootstrap-table.min.css">
+<div  class="mat-elevation-z8" matSort>
+    <input type="radio" id="all" (click)="isFiltered('all')" name="filter" checked>
+    <label for="all">All</label>
+    <input type="radio" id="water" (click)="isFiltered('water')" name="filter">
+    <label for="all">Water Rescue</label>
+    <input type="radio" id="mountain" (click)="isFiltered('mountain')" name="filter">
+    <label for="mountain">Mountain Rescue</label>
+    <input type="radio" id="disaster" (click)="isFiltered('disaster')" name="filter">
+    <label for="disaster">Disaster/Urban Rescue</label>
+<table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+            Select
+        </th>
+        <td mat-cell *matCellDef="let element">
+            <input type="radio" ng-model="value" name="rescue" (click)="thisSelected(element.animal_id);">
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.5/dist/bootstrap-table.min.js"></script>
-        <table id="table" data-toggle="table" data-pagination="true" data-page-size="10" >
-            <thead>
-                <tr>
-                    <th scope="col">Select</th>
-                    <th scope="col">Animal ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Species</th>
-                    <th scope="col">Outcome</th>
-                    <th scope="col">Breed</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Sex</th>
-                    <th scope="col">Color</th>
-                </tr>
-            </thead>
-            <tbody>
-                    <tr *ngFor="let rescue of rescues">
-                        <th scope="row"><input type="radio" name="chosen_animal" (change)="onSelectionChange($event)" value="{{rescue.animal_id}}"></th>
-                        <td>{{rescue.animal_id}}</td>
-                        <td>{{rescue.name}}</td>
-                        <td>{{rescue.species}}</td>
-                        <td>{{rescue.outcome}}</td>
-                        <td>{{rescue.breed}}</td>
-                        <td>{{rescue.age}}</td>
-                        <td>{{rescue.sex}}</td>
-                        <td>{{rescue.color}}</td>
-                    </tr>
-            </tbody>
-        </table>
- </body>
+    <ng-container matColumnDef="animal_type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Species </th>
+        <td mat-cell *matCellDef="let element"> {{element.animal_type}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="age_upon_outcome">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Age </th>
+        <td mat-cell *matCellDef="let element"> {{element.age_upon_outcome}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="breed">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Breed </th>
+        <td mat-cell *matCellDef="let element"> {{element.breed}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="outcome_type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Outcome </th>
+        <td mat-cell *matCellDef="let element"> {{element.outcome_type}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="outcome_subtype">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Outcome Subtype </th>
+        <td mat-cell *matCellDef="let element"> {{element.outcome_subtype}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sex_upon_outcome">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Sex </th>
+        <td mat-cell *matCellDef="let element"> {{element.sex_upon_outcome}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColomns"></tr>\
+    <tr mat-row *matRowDef="let row; columns: displayedColomns;"></tr>
+</table>
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" aria-label="Select page"></mat-paginator>
+</div>
