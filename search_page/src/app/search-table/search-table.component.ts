@@ -10,6 +10,7 @@ import { FiltersService } from '../services/filters.service';
 import { rescue_outcomes } from '../data/aac_shelter_outcomes';
 import { SearchMapComponent } from '../search-map/search-map.component';
 
+
 @Component({
   selector: 'app-search-table',
   imports: [CommonModule, MatTableModule, MatPaginatorModule, 
@@ -62,7 +63,7 @@ export class SearchTableComponent implements AfterViewInit {
     this.dataSource.data = finalData;
   }
 
-  ngAfterViewInit(): void {
+  async ngAfterViewInit() {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       if (this.startPosition.name != ""){
@@ -71,6 +72,6 @@ export class SearchTableComponent implements AfterViewInit {
       else {
         this.markerName = "No name";
       }
+      
+    }
   }
-
-}

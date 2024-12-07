@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -44,5 +44,29 @@ export class FiltersService {
     }
 
     return finalData;
+  }
+
+  pieData(data): Observable<any[]> {
+    let total = {
+      'breed': '',
+      'amount': 0
+    }
+    let breeds = [];
+    for(let element of data) {
+      let isFound = false;
+      for (let item of breeds) {
+        if(item.breed == element.breed){
+          item.amount += 1;
+          isFound = true;
+          break;
+        }
+      }
+      if(isFound == false){
+        total.breed = element.breed;
+        total.amount = 1;
+        breeds.push(total);
+      }
+    }
+    return of(breeds);
   }
 }
