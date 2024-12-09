@@ -13,11 +13,18 @@
     "bootstrap": "^5.3.3",
     "bootstrap-table": "^1.23.5",
     "cookie-parser": "~1.4.4",
+    "crypto": "^1.0.1",
     "debug": "~2.6.9",
+    "dotenv": "^16.4.7",
     "express": "~4.16.1",
+    "express-jwt": "^8.4.1",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.8.4",
     "morgan": "~1.9.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
     "plotly.js-dist-min": "^2.35.2"
   }
 }
