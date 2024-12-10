@@ -60,6 +60,9 @@ const rescuesFindByCode = async(req, res) => {
 // and JSON message to requesting client 
 const rescuesAddRescue = async(req, res) => {
     if(getUser(req, res).status == 201);
+
+    let currentDate = new Date();
+
     const newRescue = new Rescue({
         ID: req.body.ID,
         age_upon_outcome: req.body.age_upon_outcome,
@@ -68,8 +71,8 @@ const rescuesAddRescue = async(req, res) => {
         breed: req.body.breed,
         color: req.body.color,
         date_of_birth: req.body.date_of_birth,
-        datetime: req.body.datetime,
-        monthyear: req.body.monthyear,
+        datetime: currentDate.toString(),
+        monthyear: currentDate.toString(),
         name: req.body.name,
         outcome_subtype: req.body.outcome_subtype,
         outcome_type: req.body.outcome_type,
@@ -79,7 +82,7 @@ const rescuesAddRescue = async(req, res) => {
         age_upon_outcome_in_weeks: req.body.age_upon_outcome_in_weeks
     });
 
-    const q = await newTrip.save();
+    const q = await newRescue.save();
 
         if(!q)
         {// Database returned no data

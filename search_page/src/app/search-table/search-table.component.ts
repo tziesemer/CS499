@@ -8,7 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FiltersService } from '../services/filters.service';
 import { SearchMapComponent } from '../search-map/search-map.component';
 import { RescuesDataService } from '../services/rescues-data.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { AuthenticationService } from '../services/authentication-service.service';
 import { Rescue } from '../models/rescues';
 
@@ -22,6 +22,7 @@ import { Rescue } from '../models/rescues';
 })
 
 export class SearchTableComponent implements OnInit, AfterViewInit{
+
   rescues!: Rescue[];
   message: string = '';
 
@@ -34,6 +35,16 @@ export class SearchTableComponent implements OnInit, AfterViewInit{
   markerName;
   dataSource = new MatTableDataSource(this.rescues);
   
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort; 
+
+  constructor(
+    private filterService: FiltersService,
+    private rescueDataService: RescuesDataService,
+    private authenticationService: AuthenticationService,
+    private router: Router
+  ) {}
+
   private getRescues(): void {
     this.rescueDataService.getRescues()
       .subscribe({
@@ -55,16 +66,16 @@ export class SearchTableComponent implements OnInit, AfterViewInit{
       })
   }
 
+  public isLoggedIn(): boolean {
+    return this.authenticationService.isLoggedIn();
+  }
+
+  public addRescue(): void {
+    this.router.navigate(['add-rescue']);
+  }
+
   displayedColomns: string[] = ['select','name', 'animal_type', 'age_upon_outcome', 'breed', 'sex_upon_outcome', 'outcome_type', 'outcome_subtype'];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort; 
-
-  constructor(
-    private filterService: FiltersService,
-    private rescueDataService: RescuesDataService,
-    private authenticationService: AuthenticationService
-  ) {}
 
   public thisSelected(value): void {
     let newMarker = {
@@ -87,7 +98,14 @@ export class SearchTableComponent implements OnInit, AfterViewInit{
   }
 
   async ngOnInit() {
+
       this.getRescues();
+
+      this.router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          this.isFiltered('all');
+        }
+      });
     }
     
     async ngAfterViewInit() {
