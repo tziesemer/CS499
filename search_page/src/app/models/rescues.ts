@@ -1,5 +1,5 @@
 export interface Rescue {
- ID: string,
+ testID: string,
  age_upon_outcome: string,
  animal_id: string,
  animal_type: string,

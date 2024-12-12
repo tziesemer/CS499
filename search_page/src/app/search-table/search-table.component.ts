@@ -25,6 +25,7 @@ export class SearchTableComponent implements OnInit, AfterViewInit{
 
   rescues!: Rescue[];
   message: string = '';
+  displayedColomns: string[];
 
   tempPosition = {
     location_lat: 10.00,
@@ -51,7 +52,6 @@ export class SearchTableComponent implements OnInit, AfterViewInit{
         next: (value: any) => {
           this.rescues = value;
           this.isFiltered("all");
-          console.log(this.rescues[0]);
           if(value.length > 0){
             this.message = 'There are ' + value.length + ' rescues available.';
           }
@@ -74,7 +74,11 @@ export class SearchTableComponent implements OnInit, AfterViewInit{
     this.router.navigate(['add-rescue']);
   }
 
-  displayedColomns: string[] = ['select','name', 'animal_type', 'age_upon_outcome', 'breed', 'sex_upon_outcome', 'outcome_type', 'outcome_subtype'];
+  public editRescue(rescue: Rescue) {
+    localStorage.removeItem('rescueCode');
+    localStorage.setItem('rescueCode', rescue.testID);
+    this.router.navigate(['edit-rescue']);
+  }
 
 
   public thisSelected(value): void {
@@ -95,17 +99,30 @@ export class SearchTableComponent implements OnInit, AfterViewInit{
     
     let finalData = this.filterService.filterData(this.rescues, value);
     this.dataSource.data = finalData;
+    this.updateColums();
   }
 
+  private updateColums(){
+    if(this.authenticationService.isLoggedIn()){
+      this.displayedColomns = ['select','name', 'animal_type', 'age_upon_outcome', 'breed', 'sex_upon_outcome', 'outcome_type', 'outcome_subtype', 'edit_rescue'];
+     }
+     else{
+      this.displayedColomns = ['select','name', 'animal_type', 'age_upon_outcome', 'breed', 'sex_upon_outcome', 'outcome_type', 'outcome_subtype'];
+     }
+  }
   async ngOnInit() {
 
       this.getRescues();
 
       this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
-          this.isFiltered('all');
+          this.getRescues();
         }
       });
+      this.authenticationService.loggedOut().subscribe(event => {
+        console.log("logged out maybe?");
+        this.updateColums();
+      })
     }
     
     async ngAfterViewInit() {
@@ -122,5 +139,12 @@ export class SearchTableComponent implements OnInit, AfterViewInit{
       else {
         this.markerName = "No name";
       }
+
+      if(this.authenticationService.isLoggedIn()){
+        this.displayedColomns = ['select','name', 'animal_type', 'age_upon_outcome', 'breed', 'sex_upon_outcome', 'outcome_type', 'outcome_subtype', 'edit_rescue'];
+       }
+       else{
+        this.displayedColomns = ['select','name', 'animal_type', 'age_upon_outcome', 'breed', 'sex_upon_outcome', 'outcome_type', 'outcome_subtype'];
+       }
     }
   }

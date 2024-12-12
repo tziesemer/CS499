@@ -4,7 +4,7 @@ const User = require('../models/users');
 
 const register = async(req, res) => {
 
-    console.log('in register');
+    //console.log('in register');
     if (!req.body.name || !req.body.email || !req.body.password) {
         return res
             .status(400)

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 // Define the rescues schema
 const rescuesSchema = new mongoose.Schema({
- ID: { type: String},
+ testID: { type: String},
  age_upon_outcome: { type: String},
  animal_id: { type: String, index: true  },
  animal_type: { type: String},

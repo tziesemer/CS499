@@ -26,7 +26,7 @@ export class AddRescueComponent implements OnInit {
 
   ngOnInit(): void {
       this.addForm = this.formBuilder.group({
-        ID: ["", Validators.required],
+        testID: ["", Validators.required],
         age_upon_outcome: ["", Validators.required],
         animal_id: ["", Validators.required],
         animal_type: ["", Validators.required],

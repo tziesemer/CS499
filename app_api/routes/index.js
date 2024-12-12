@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 function auth(req, res, next) {
     // console.log('In middleware');
     const authHeader = req.headers['authorization'];
-    console.log('Auth header: ' +  authHeader);
+    //console.log('Auth header: ' +  authHeader);
 
     if(authHeader == null){
         console.log('Auth Header Required but NOT PRESENT!');

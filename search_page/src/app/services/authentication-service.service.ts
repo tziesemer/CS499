@@ -1,15 +1,15 @@
-import { Inject, inject, Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { BROWSER_STORAGE } from '../storage';
 import { User } from '../models/users';
 import { Authresponse } from '../models/authresponse';
 import { RescuesDataService } from './rescues-data.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
+  private dataSubject = new Subject<any>();
   constructor(@Inject(BROWSER_STORAGE) private storage: Storage,
 private rescueDataService: RescuesDataService) { }
 
@@ -35,10 +35,16 @@ public register(user: User): void {
         this.saveToken(authResp.token));
 }
 
-public logout (): void {
+public logout (): void{
   this.storage.removeItem('rescue-token');
+  this.loggedOut();
 }
 
+public loggedOut(){
+  //Update dataSubject so that the listener can be triggered
+  this.dataSubject.next('stuff');
+  return this.dataSubject.asObservable();
+}
 public isLoggedIn (): boolean {
   const token = this.getToken();
   //console.log('token' + token);

@@ -4,10 +4,10 @@
 
         <div class="form-group">
             <label>ID:</label>
-            <input type="text" formControlName="ID" placeholder="ID" class="form-control"
-            [ngClass]="{'is-invalid':submitted && f['ID'].errors}">
-            <div *ngIf="submitted&&f['ID'].errors">
-                <div *ngIf="f['ID'].errors?.['required']">
+            <input type="string" formControlName="testID" placeholder="ID" class="form-control"
+            [ngClass]="{'is-invalid':submitted && f['testID'].errors}">
+            <div *ngIf="submitted&&f['testID'].errors">
+                <div *ngIf="f['testID'].errors?.['required']">
                     ID is required
                 </div>
             </div>

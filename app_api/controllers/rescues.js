@@ -4,11 +4,11 @@ const Users = require('../models/users');
 const Model = mongoose.model('rescues');
 const User = mongoose.model('users');
 
-// Get: /trips - lists all the trips
+// Get: /rescues - lists all the rescues
 // Regardless of outcome, response must include HTML status code
 // and JSON message to the requesting client
 const rescuesList = async(req, res) => {
-    console.log("in rescues list");
+    //console.log("in rescues list");
     const q = await Model.find({}) // No filter, return all records
     .exec();
 
@@ -21,8 +21,8 @@ const rescuesList = async(req, res) => {
         return res
                 .status(404)
                 .json(err);
-    } else { // Return resulting trip list
-        console.log('Resuce list sent out');
+    } else { // Return resulting rescue list
+        //console.log('Resuce list sent out');
         return res
                 .status(200)
                 .json(q);   
@@ -30,12 +30,12 @@ const rescuesList = async(req, res) => {
 
 };
 
-// Get: /trips/:tripCode - lists a single trip
+// Get: /rescues/:rescueCode - lists a single rescue
 // Regardless of outcome, response must include HTML status code
 // and JSON message to the requesting client
 const rescuesFindByCode = async(req, res) => {
     const q = await Model
-        .find({'code' : req.params.ID }) // Return a single record
+        .find({'testID' : req.params.rescueCode }) // Return a single record
         .exec();
 
     // Uncomment the following line to show results of querey
@@ -47,7 +47,7 @@ const rescuesFindByCode = async(req, res) => {
         return res
                 .status(404)
                 .json(err);
-    } else { // Return resulting trip list
+    } else { // Return resulting rescue list
         return res
                 .status(200)
                 .json(q);   
@@ -55,7 +55,7 @@ const rescuesFindByCode = async(req, res) => {
 
 };
 
-// Post: /trips - Adds a new Trip
+// Post: /rescues - Adds a new Rescue
 // Regardless of outcome, response must include HTML status code
 // and JSON message to requesting client 
 const rescuesAddRescue = async(req, res) => {
@@ -64,7 +64,7 @@ const rescuesAddRescue = async(req, res) => {
     let currentDate = new Date();
 
     const newRescue = new Rescue({
-        ID: req.body.ID,
+        testID: req.body.testID,
         age_upon_outcome: req.body.age_upon_outcome,
         animal_id: req.body.animal_id,
         animal_type: req.body.animal_type,
@@ -89,7 +89,7 @@ const rescuesAddRescue = async(req, res) => {
             return res
                 .status(400)
                 .json(err);
-        }else{// Return new trip
+        }else{// Return new rescue
             return res
                 .status(201);
         }
@@ -99,7 +99,6 @@ const rescuesAddRescue = async(req, res) => {
         // console.log(q);
 };
 
-//PUT: /trips/:tripCode - Adds a new Trip
 // Regardless of outcome, response must include HTML status code
 // and JSON message to the requesting client
 const rescuesUpdateRescue = async(req, res) => {
@@ -108,12 +107,12 @@ const rescuesUpdateRescue = async(req, res) => {
     //console.log(req.params);
     //console.log(req.body);
     if(getUser(req, res).status == 201);
-            console.log("made it into update")
+            //console.log("made it into update")
     const q = await Model
         .findOneAndUpdate(
-            {'code': req.params.ID},
+            {'testID': req.params.rescueCode},
             {
-                ID: req.body.ID,
+                testID: req.body.testID,
                 age_upon_outcome: req.body.age_upon_outcome,
                 animal_id: req.body.animal_id,
                 animal_type: req.body.animal_type,
@@ -132,13 +131,13 @@ const rescuesUpdateRescue = async(req, res) => {
             }
         )
         .exec();
-
+       
         if(!q)
             {//Database returns no data
                 return res
                     .status(400)
                     .json(err);
-            }else{//Return resulting updated trip
+            }else{//Return resulting updated rescue
                 return res
                     .status(201);
             }
@@ -157,7 +156,7 @@ const rescuesDeleteRescue = async(req, res) => {
             
     const q = await Model
         .findOneAndDelete(
-            {'code': req.params.ID}
+            {'testID': req.params.rescueCode}
         )
         .exec();
 
@@ -166,7 +165,7 @@ const rescuesDeleteRescue = async(req, res) => {
                 return res
                     .status(400)
                     .json(err);
-            }else{//Return resulting updated trip
+            }else{//Return resulting updated rescue
                 return res
                     .status(201);
             }
@@ -181,9 +180,9 @@ const getUser = async(req, res) => {
         const q = await User
             .findOne({ 'email': req.authorization.email })
             .exec();
-            console.log('Got past mongoose in getUser');
+            //console.log('Got past mongoose in getUser');
             if (!q) {
-                console.log('user not found');
+                //console.log('user not found');
                 return res
                     .status(404)
                     .json({"message": "User not found"});

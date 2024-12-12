@@ -21,7 +21,7 @@ export class RescuesDataService {
   url= 'http://localhost:3000/api/rescues';
   baseUrl = 'http://localhost:3000/api';
     getRescues() : Observable<Rescue[]> {
-      console.log("in Get rescues");
+      //console.log("in Get rescues");
       let test = this.http.get<Rescue[]>(this.url);
       return test;
     }
@@ -35,20 +35,20 @@ export class RescuesDataService {
     }
 
     getRescue(rescueCode: string) : Observable<Rescue[]> {
-      console.log('Inside TripDataService::getTrip');
+      //console.log('Inside RescueDataService::getRescue');
       return this.http.get<Rescue[]>(this.url + '/' + rescueCode);
     }
 
     updateRescue(formData: Rescue, token: string) : Observable<Rescue> {
-      //console.log('Inside TripDataService::updateTrip');
+      //console.log('Inside RescueDataService::updateRescue');
       let headers = new HttpHeaders({
         'Authorization': token  
       });
-      return this.http.put<Rescue>(this.url + '/' + formData.ID, formData, {headers: headers});
+      return this.http.put<Rescue>(this.url + '/' + formData.testID, formData, {headers: headers});
     }
 
     deleteRescue(code: string, token: string) : Observable<Rescue> {
-      //console.log('Inside TripDataService::deleteTrip);
+      //console.log('Inside RescueDataService::deleteRescue);
       let headers = new HttpHeaders({
         'Authorization': token
       });
@@ -57,7 +57,7 @@ export class RescuesDataService {
     }
 
     login(user: User) : Promise<Authresponse> {
-      //console.log('in trip-data login');
+      //console.log('in rescue-data login');
       return this.handleAuthAPICall('login', user);
     }
 
