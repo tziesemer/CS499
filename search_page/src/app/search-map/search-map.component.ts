@@ -7,13 +7,15 @@ import { GoogleMapsModule } from '@angular/google-maps';
   templateUrl: './search-map.component.html',
   styleUrl: './search-map.component.css'
 })
+  
 export class SearchMapComponent implements OnInit {
     
-
+//Pulls in marker name and location from data input from parent component
     @Input('marker') marker;
     @Input('markerName') markerName;
 
     zoom = 12;
+  
   options: google.maps.MapOptions = {
     mapTypeId: 'hybrid',
     zoomControl: false,
@@ -28,7 +30,7 @@ export class SearchMapComponent implements OnInit {
  
   ngOnInit() {
 
-
+  //Rebuilds map wheneber marker data is changed
     navigator.geolocation.getCurrentPosition((marker) => {
     });
 
