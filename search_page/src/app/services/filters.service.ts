@@ -9,15 +9,16 @@ export class FiltersService {
 
   constructor(
   ) { }
-
+//Function to take in the array of documents and use the provided filter to return a filtered array
   filterData(data, filter){
-
+//finalData is the array to be sent back after filter is applied
     let finalData = [];
 
     switch(filter){
       case "all":
         finalData = data;
         break;
+        // Each filter takes the smallest component of breed to search through the provided data then the sex_upon_outcome and age are checked.
       case "water":
         data.forEach((element) => {
           if((element.breed.includes('Newf') || element.breed.includes('Chesa') || element.breed.includes('Lab')) && element.sex_upon_outcome == "Intact Female" && (element.age_upon_outcome_in_weeks >= 26.0 && element.age_upon_outcome_in_weeks <= 156)){
@@ -39,6 +40,7 @@ export class FiltersService {
           }
         })
         break;
+        //If all or a not applicable filter are sent through then the data is returned unfiltered 
       default:
         finalData = data;
     }
@@ -46,27 +48,4 @@ export class FiltersService {
     return finalData;
   }
 
-  pieData(data): Observable<any[]> {
-    let total = {
-      'breed': '',
-      'amount': 0
-    }
-    let breeds = [];
-    for(let element of data) {
-      let isFound = false;
-      for (let item of breeds) {
-        if(item.breed == element.breed){
-          item.amount += 1;
-          isFound = true;
-          break;
-        }
-      }
-      if(isFound == false){
-        total.breed = element.breed;
-        total.amount = 1;
-        breeds.push(total);
-      }
-    }
-    return of(breeds);
-  }
 }
