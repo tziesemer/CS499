@@ -1,4 +1,6 @@
+<!--sets the sort to work within this div-->
 <div  class="mat-elevation-z8" matSort>
+  <!--Here are all the filter radio buttons which call isFiltered function and resets table data-->
     <input type="radio" id="all" (click)="isFiltered('all')" name="filter" checked>
     <label for="all">All</label>
     <input type="radio" id="water" (click)="isFiltered('water')" name="filter">
@@ -7,15 +9,18 @@
     <label for="mountain">Mountain Rescue</label>
     <input type="radio" id="disaster" (click)="isFiltered('disaster')" name="filter">
     <label for="disaster">Disaster/Urban Rescue</label>
+  
 <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
             Select
         </th>
+      <!--This collum is the radio button used to select individual rescues for the search-map -->
         <td mat-cell *matCellDef="let element">
             <input type="radio" ng-model="value" name="rescue" (click)="thisSelected(element);">
         </td>
     </ng-container>
+  <!--Each one of these defines a colum, order here doesn't matter and is controlled in the displayed colums info-->
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
@@ -50,9 +55,15 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Sex </th>
         <td mat-cell *matCellDef="let element"> {{element.sex_upon_outcome}} </td>
     </ng-container>
+  <!--Sets displayed columns-->
     <tr mat-header-row *matHeaderRowDef="displayedColomns"></tr>\
     <tr mat-row *matRowDef="let row; columns: displayedColomns;"></tr>
+  
 </table>
+  <!--Paginator is added to the bottom of the table. If table looks empty then something failed to load and paginator wont connect to table-->
 <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" aria-label="Select page"></mat-paginator>
+  
 </div>
+
+<!--Search-map is created under table and passed the position and name for selected row-->
 <app-search-map [marker]="position" [markerName]="markerName"></app-search-map>
