@@ -46,27 +46,17 @@ export class FiltersService {
     return finalData;
   }
 
-  pieData(data): Observable<any[]> {
-    let total = {
-      'breed': '',
-      'amount': 0
-    }
-    let breeds = [];
-    for(let element of data) {
-      let isFound = false;
-      for (let item of breeds) {
-        if(item.breed == element.breed){
-          item.amount += 1;
-          isFound = true;
-          break;
-        }
+  searchBreed(data, searchBreedTerm){
+
+    let finalData = [];
+
+    data.forEach((element) => {
+      if(element.breed.toLowerCase().includes(searchBreedTerm.toLowerCase())){
+        finalData.push(element);
       }
-      if(isFound == false){
-        total.breed = element.breed;
-        total.amount = 1;
-        breeds.push(total);
-      }
-    }
-    return of(breeds);
+    })
+
+    return finalData;
   }
+
 }

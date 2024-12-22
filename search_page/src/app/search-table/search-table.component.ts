@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
@@ -11,11 +11,13 @@ import { RescuesDataService } from '../services/rescues-data.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthenticationService } from '../services/authentication-service.service';
 import { Rescue } from '../models/rescues';
+import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-search-table',
   imports: [CommonModule, MatTableModule, MatPaginatorModule, 
-    MatSelectModule, MatSortModule, MatCheckboxModule, SearchMapComponent],
+    MatSelectModule, MatSortModule, MatCheckboxModule, SearchMapComponent, ReactiveFormsModule, FormsModule],
   templateUrl: './search-table.component.html',
   styleUrl: './search-table.component.css',
   providers: [RescuesDataService]
@@ -26,6 +28,10 @@ export class SearchTableComponent implements OnInit, AfterViewInit{
   rescues!: Rescue[];
   message: string = '';
   displayedColomns: string[];
+  searchControl = new FormControl();
+  filterData!: Rescue[];
+  currentSearchTerm: string = 'all';
+  inputText: string = '';
 
   tempPosition = {
     location_lat: 10.00,
@@ -98,6 +104,24 @@ export class SearchTableComponent implements OnInit, AfterViewInit{
   public isFiltered(value): void {
     
     let finalData = this.filterService.filterData(this.rescues, value);
+    this.dataSource.data = finalData;
+    this.updateColums();
+    this.currentSearchTerm = value;
+    this.filterData = finalData;
+  }
+
+  public searchBreed(): void {
+    
+    let value = this.inputText;
+
+    let finalData = [];
+    if(!value){
+        //console.log(value);
+        finalData = this.filterService.filterData(this.rescues, this.currentSearchTerm);
+    }
+    else{
+      finalData = this.filterService.searchBreed(this.filterData, value);
+    }
     this.dataSource.data = finalData;
     this.updateColums();
   }

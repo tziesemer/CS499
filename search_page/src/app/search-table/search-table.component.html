@@ -7,12 +7,14 @@
     <label for="mountain">Mountain Rescue</label>
     <input type="radio" id="disaster" (click)="isFiltered('disaster')" name="filter">
     <label for="disaster">Disaster/Urban Rescue</label>
+    <input type="text" alt="Breed" [(ngModel)]="inputText" placeholder="Enter breed here" style="margin-left: 1em;" (keyup.enter)="searchBreed()">
+    <button type="button" (click)="searchBreed()">Search by Breed</button>
     <div *ngIf="isLoggedIn()">
         <div >
             <button (click)="addRescue()" class="btn btn-info">Add Rescue</button>
         </div>
     </div>
-<table mat-table [dataSource]="dataSource">
+<table mat-table [dataSource]="dataSource" style="margin-top: 1rem;">
     <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
             Select
