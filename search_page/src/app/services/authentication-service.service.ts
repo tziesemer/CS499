@@ -3,25 +3,29 @@ import { BROWSER_STORAGE } from '../storage';
 import { User } from '../models/users';
 import { Authresponse } from '../models/authresponse';
 import { RescuesDataService } from './rescues-data.service';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthenticationService {
   private dataSubject = new Subject<any>();
   constructor(@Inject(BROWSER_STORAGE) private storage: Storage,
-private rescueDataService: RescuesDataService) { }
+  private rescueDataService: RescuesDataService) { }
 
+//Pulls token from local storage if it is there
 public getToken (): string  {
   let tempToken = JSON.stringify(this.storage.getItem('rescue-token'));
   return JSON.parse(tempToken);
 }
 
+//Sets current token to local storage for later use
 public saveToken (token: string): void {
   this.storage.setItem('rescue-token', token);
 }
 
+//Attempts login and saves token if login succeeds
 public login(user: User): void {
   let voidAuth = new Authresponse();
   let testOne = this.rescueDataService.login(user)
@@ -29,12 +33,14 @@ public login(user: User): void {
       this.saveToken(authResp.token));
 }
 
+//Registers user and creates token if registration succeeds
 public register(user: User): void {
   let regRes = this.rescueDataService.register(user)
       .then((authResp: Authresponse) =>
         this.saveToken(authResp.token));
 }
 
+//Clears token on logout
 public logout (): void{
   this.storage.removeItem('rescue-token');
   this.loggedOut();

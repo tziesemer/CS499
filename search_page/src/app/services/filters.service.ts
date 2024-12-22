@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +13,12 @@ export class FiltersService {
     let finalData = [];
 
     switch(filter){
+      //If filter term is all or doesn't match a the other options then all data is returned
       case "all":
         finalData = data;
         break;
+      //The three main terms will filter data based on required breed, age, and sex of rescue 
+      //Then if the item meeets the criteria it is added to finalData 
       case "water":
         data.forEach((element) => {
           if((element.breed.includes('Newf') || element.breed.includes('Chesa') || element.breed.includes('Lab')) && element.sex_upon_outcome == "Intact Female" && (element.age_upon_outcome_in_weeks >= 26.0 && element.age_upon_outcome_in_weeks <= 156)){
@@ -42,16 +43,17 @@ export class FiltersService {
       default:
         finalData = data;
     }
-
+    //finalData is returned to calling function
     return finalData;
   }
 
   searchBreed(data, searchBreedTerm){
 
     let finalData = [];
-
+    //Checks each element in provided data to see if they have the searchBreedTerm in their breed field
     data.forEach((element) => {
       if(element.breed.toLowerCase().includes(searchBreedTerm.toLowerCase())){
+        //If they do then it is added to the finalData to be sent back to the calling function
         finalData.push(element);
       }
     })
