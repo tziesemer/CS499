@@ -14,6 +14,8 @@ export class FiltersService {
 
     let finalData = [];
 
+    console.log("in filterData");
+
     switch(filter){
       case "all":
         finalData = data;
@@ -42,6 +44,21 @@ export class FiltersService {
       default:
         finalData = data;
     }
+
+    return finalData;
+  }
+
+  searchBreed(data, searchBreedTerm){
+
+    let finalData = [];
+    console.log("In searchBreed");
+    console.log(searchBreedTerm);
+
+    data.forEach((element) => {
+      if(element.breed.toLowerCase().includes(searchBreedTerm.toLowerCase())){
+        finalData.push(element);
+      }
+    })
 
     return finalData;
   }

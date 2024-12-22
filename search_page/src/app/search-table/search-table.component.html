@@ -1,4 +1,5 @@
 <div  class="mat-elevation-z8" matSort>
+    <div style="margin: 1em">
     <input type="radio" id="all" (click)="isFiltered('all')" name="filter" checked>
     <label for="all">All</label>
     <input type="radio" id="water" (click)="isFiltered('water')" name="filter">
@@ -7,6 +8,12 @@
     <label for="mountain">Mountain Rescue</label>
     <input type="radio" id="disaster" (click)="isFiltered('disaster')" name="filter">
     <label for="disaster">Disaster/Urban Rescue</label>
+
+    <input type="text" alt="Breed" [(ngModel)]="inputText" placeholder="Enter breed here" style="margin-left: 2em;" (keyup.enter)="searchBreed()">
+    <button type="button" (click)="searchBreed()">Search by Breed</button>
+
+    </div>
+
 <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
